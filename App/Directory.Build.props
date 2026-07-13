@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <LangVersion>14</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <NoWarn>1573,1591,618</NoWarn>
+    <WarningsAsErrors>0659,0661,105,108,1570,1572,1574,1587,162,168,169,1718,1734,219,414,628,649,693,8321</WarningsAsErrors>
+  </PropertyGroup>
+</Project>

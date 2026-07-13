@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iSukces.CliTools", "iSukces.CliTools\iSukces.CliTools.csproj", "{6C4D0274-DE79-438C-9424-F23CA815415D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iSukces.Cli.Python", "iSukces.Cli.Python\iSukces.Cli.Python.csproj", "{87E59C2C-9303-472F-851C-FC53C19FF4A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iSukces.Cli.Whisper", "iSukces.Cli.Whisper\iSukces.Cli.Whisper.csproj", "{CDC46FD3-7B57-43B0-A9E2-B5914C2DA529}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iSukces.Cli.Punctuate", "iSukces.Cli.Punctuate\iSukces.Cli.Punctuate.csproj", "{52FAB1F7-DB6A-4B21-90CC-B7765E28B2F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "iSukces.Cli.Ffmpeg", "iSukces.Cli.Ffmpeg\iSukces.Cli.Ffmpeg.csproj", "{EE97CED9-275E-4E72-89E4-A2788AA98394}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6C4D0274-DE79-438C-9424-F23CA815415D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C4D0274-DE79-438C-9424-F23CA815415D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C4D0274-DE79-438C-9424-F23CA815415D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C4D0274-DE79-438C-9424-F23CA815415D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87E59C2C-9303-472F-851C-FC53C19FF4A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87E59C2C-9303-472F-851C-FC53C19FF4A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87E59C2C-9303-472F-851C-FC53C19FF4A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87E59C2C-9303-472F-851C-FC53C19FF4A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDC46FD3-7B57-43B0-A9E2-B5914C2DA529}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDC46FD3-7B57-43B0-A9E2-B5914C2DA529}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDC46FD3-7B57-43B0-A9E2-B5914C2DA529}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDC46FD3-7B57-43B0-A9E2-B5914C2DA529}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52FAB1F7-DB6A-4B21-90CC-B7765E28B2F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52FAB1F7-DB6A-4B21-90CC-B7765E28B2F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52FAB1F7-DB6A-4B21-90CC-B7765E28B2F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52FAB1F7-DB6A-4B21-90CC-B7765E28B2F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE97CED9-275E-4E72-89E4-A2788AA98394}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE97CED9-275E-4E72-89E4-A2788AA98394}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE97CED9-275E-4E72-89E4-A2788AA98394}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE97CED9-275E-4E72-89E4-A2788AA98394}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

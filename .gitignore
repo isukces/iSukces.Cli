@@ -1,0 +1,16 @@
+*.suo
+*.bak
+**/bin/
+**/obj/
+.claude/
+.roo/
+.vs/
+.vscode/
+.idea/
+node_modules/
+Install/
+Doc/tasks/
+Doc/changelog/
+install-build/
+Del-wpftmp.bat
+cleanBinObj.bat

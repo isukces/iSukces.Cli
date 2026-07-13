@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Copyright>Copyright © Internet Sukces Piotr Stęclik 2026</Copyright>
+    <Authors>Internet Sukces Piotr Stęclik</Authors>
+    <Company>Internet Sukces Piotr Stęclik</Company>
+    <ProjectGuid>87E59C2C-9303-472F-851C-FC53C19FF4A7</ProjectGuid>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyVersion>1.26.713.1</AssemblyVersion>
+    <FileVersion>1.26.713.1</FileVersion>
+    <Version>1.26.713.1</Version>
+    <LangVersion>14</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <Title>iSukces.Cli.Python</Title>
+    <Description>.NET library for managing Python environments: virtual environment creation, pip package installation, PyTorch and CUDA Toolkit detection, HuggingFace token handling, and process environment variable management.</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSource>false</IncludeSource>
+    <IncludeSymbols>true</IncludeSymbols>
+    <PackageProjectUrl>https://github.com/isukces/iSukces.Cli</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/isukces/iSukces.Cli</RepositoryUrl>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackageTags>python;venv;pip;pytorch;cuda;huggingface;environment;cli;dotnet;csharp</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\iSukces.CliTools\iSukces.CliTools.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="iSukces.Cli.Python.csproj.DotSettings" />
+    <None Include="readme.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.300">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+</Project>

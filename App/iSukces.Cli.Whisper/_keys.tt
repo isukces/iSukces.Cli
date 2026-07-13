@@ -1,0 +1,27 @@
+<#@ template language="C#" #>
+<#@ include file="..\_include\PrimitiveObsession.ttinclude" once="true" #><#
+
+Config.Namespace = "iSukces.Cli.Whisper";
+Config.IncludeFeatures = Features.All;
+Config.IgnoreFeatures =
+    Features.SystemTextJsonSerializer
+    | Features.NewtonsoftJsonSerializer
+    | Features.PrimitiveWrapper
+    | Features.RelativeOperators;
+
+Config.ConvertFromPrimitive = TypeConversion.None;
+Config.ConvertToPrimitive = TypeConversion.None;
+Config.ImplicitUsings.Add("System");
+
+// Config.AddAttributes = ["CompactSerializer"];
+// Config.AddUsings = ["Alpex.Interfaces.Common"];
+
+var infos = new[]
+{
+    new StringKey("WhisperModelName")
+};
+
+PrimitiveObsessionBase.WriteAll(infos, this);
+#>
+
+

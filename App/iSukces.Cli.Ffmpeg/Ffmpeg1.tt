@@ -1,0 +1,100 @@
+using iSukces.CliTools;
+<#@ template language="C#" #>
+<#
+    var listaPropertisow = new[]
+    {
+        new Property("string", "InputFile", "i", "input_file set input file"),
+
+        // ========== AUDIO
+        new Property("bool?", "DisableAudio", "an", "disable audio"),
+        new Property("int?", "AudioChannelsNumber", "ac", "channels set number of audio channels"),
+        new Property("int?", "Volume", "vol", "volume change audio volume (256=normal)"),
+        new Property("FFmpegBitrate?", "AudioBitrate", "ab", "set bitrate (in bits/s) (from 0 to INT_MAX) (default 128000)")
+        {
+            AddToString = true
+        },
+        new Property("FFmpegOutputFormat?", "OutputFormat", "f", "???????????")
+        {
+            UseSnake = true
+        },
+
+        // ========== VIDEO
+        new Property("bool?", "DisableVideo", "vn", "disable video"),
+    };
+ 
+    
+     #>
+// Descriptions taken from
+// https://gist.githubusercontent.com/tayvano/6e2d456a9897f55025e25035478a3a50/raw/ed7adedee303a17bb05251f2abba4defeb3ac03a/gistfile1.txt
+
+namespace iSukces.Cli.Ffmpeg;
+
+public sealed class FFmpegCli1
+{
+    private sealed class FfmpegArgumentCollector : ArgumentCollector
+    {
+    }
+
+    public string[] GetArguments()
+    {
+        var args = new FfmpegArgumentCollector();
+        args.OptionPrefix = "-";
+<#
+    foreach (var p in listaPropertisow)
+    {
+        // WriteLine($"        // dodajemy opcję {p.OptionName}");
+        var option = "\"" + p.OptionName + "\"";
+        if (p.DataType == "bool?")
+        {
+            WriteLine($"        if ({p.Name} == true)");
+            WriteLine($"            args.AddOption({option});");
+            continue;
+        }
+        var expression = p.Name;
+        if (p.AddToString)
+            expression += "?.ToString()";
+
+        var methodName = "Add";
+        if (p.UseSnake)
+            methodName += "Snake";
+        
+        WriteLine($"        args.{methodName}({expression}, {option});");
+    }
+
+#>
+        return args.ToArray();
+    }
+    
+    // automatycznie dodane propertisy
+<#
+
+        foreach (var p in listaPropertisow)
+        {
+            WriteLine("    /// <summary>");
+            WriteLine("    /// "+ p.Description);
+            WriteLine("    /// </summary>");
+            WriteLine("    public " + p.DataType+" "+p.Name+" { get; set; }");
+            WriteLine("");
+        }
+#>
+}
+<#+
+    private class Property
+    {
+        public Property(string dataType, string name, string optionName, string description)
+        {
+            DataType = dataType;
+            Name = name;
+            OptionName = optionName;
+            Description = description;
+        }
+
+        public string DataType { get; }
+        public string Name { get; }
+        public string OptionName { get; }
+        public string Description { get; }
+        public bool AddToString { get; set; }
+        public bool UseSnake { get; set; }
+    }
+
+#>
