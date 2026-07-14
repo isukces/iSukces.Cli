@@ -5,12 +5,19 @@ using iSukces.CliTools;
 
 namespace iSukces.Cli.Ffmpeg;
 
+/// <summary>
+/// Configuration and execution wrapper for FFmpeg CLI calls.
+/// </summary>
 public sealed partial class FFmpegCli
 {
     private sealed class FfmpegArgumentCollector : ArgumentCollector
     {
     }
 
+    /// <summary>
+    /// Command-line arguments created from the current FFmpeg configuration.
+    /// </summary>
+    /// <returns>The command-line arguments for the FFmpeg process.</returns>
     public string[] GetArguments()
     {
         var args = new FfmpegArgumentCollector();
@@ -41,6 +48,11 @@ public sealed partial class FFmpegCli
         return args.ToArray();
     }
 
+    /// <summary>
+    /// Runs the configured FFmpeg process asynchronously.
+    /// </summary>
+    /// <param name="workingDirectory">Working directory for the FFmpeg process.</param>
+    /// <returns>The captured CLI execution result.</returns>
     public async Task<CliResult> RunAsync(string? workingDirectory)
     {
         Console.WriteLine("Running ffmpeg");
@@ -57,29 +69,35 @@ public sealed partial class FFmpegCli
     }
 
     /// <summary>
-    /// -i input_file set input file
+    /// Input media file passed to FFmpeg.
     /// </summary>
     public string InputFile { get; set; }
 
     /// <summary>
-    /// output file
+    /// Output media file produced by FFmpeg.
     /// </summary>
     public required string OutFile { get; set; }
 
+    /// <summary>
+    /// Custom FFmpeg arguments appended before the output file.
+    /// </summary>
     public string[]? Custom { get; set; }
 }
 
 //=========== VIDEO
+/// <summary>
+/// Video-related FFmpeg configuration options.
+/// </summary>
 public sealed partial class FFmpegCli
 {
      
     /// <summary>
-    /// -vn disable video
+    /// Video stream disabling option.
     /// </summary>
     public bool? DisableVideo { get; set; }
     
     /// <summary>
-    /// -vframes number set the number of video frames to record
+    /// Number of video frames to record.
     /// </summary>
     public int? VideoFrames { get; set; }
 }
@@ -87,40 +105,45 @@ public sealed partial class FFmpegCli
 
 
 //=========== AUDIO
+/// <summary>
+/// Audio-related FFmpeg configuration options.
+/// </summary>
 public sealed partial class FFmpegCli
 {
     
     /// <summary>
-    /// -an disable audio
+    /// Audio stream disabling option.
     /// </summary>
     public bool? DisableAudio { get; set; }
     
     /// <summary>
-    ///     -ac channels set number of audio channels
+    /// Number of audio channels.
     /// </summary>
-    /// <returns></returns>
     public int? AudioChannelsNumber { get; set; }
 
 
     /// <summary>
-    ///     -ar rate set audio sampling rate (in Hz)
+    /// Audio sampling rate in hertz.
     /// </summary>
     public int? AudioRateHz { get; set; }
 
+    /// <summary>
+    /// Output container format passed to FFmpeg.
+    /// </summary>
     public FFmpegOutputFormat? OutputFormat { get; set; }
 
     /// <summary>
-    /// -aframes number set the number of audio frames to record
+    /// Number of audio frames to record.
     /// </summary>
     public int? NumberOfAudioFramesToRecord { get; set; }
 
     /// <summary>
-    /// -ab set bitrate (in bits/s) (from 0 to INT_MAX) (default 128000)
+    /// Audio bitrate passed to FFmpeg.
     /// </summary>
     public FFmpegBitrate? AudioBitrate { get; set; }
     
     /// <summary>
-    /// vol volume change audio volume (256=normal)
+    /// Audio volume value where 256 means normal volume.
     /// </summary>
     public int? Volume { get; set; }
 }

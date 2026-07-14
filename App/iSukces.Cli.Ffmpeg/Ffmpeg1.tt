@@ -3,23 +3,23 @@ using iSukces.CliTools;
 <#
     var listaPropertisow = new[]
     {
-        new Property("string", "InputFile", "i", "input_file set input file"),
+        new Property("string", "InputFile", "i", "Input media file passed to FFmpeg."),
 
         // ========== AUDIO
-        new Property("bool?", "DisableAudio", "an", "disable audio"),
-        new Property("int?", "AudioChannelsNumber", "ac", "channels set number of audio channels"),
-        new Property("int?", "Volume", "vol", "volume change audio volume (256=normal)"),
-        new Property("FFmpegBitrate?", "AudioBitrate", "ab", "set bitrate (in bits/s) (from 0 to INT_MAX) (default 128000)")
+        new Property("bool?", "DisableAudio", "an", "Audio stream disabling option."),
+        new Property("int?", "AudioChannelsNumber", "ac", "Number of audio channels."),
+        new Property("int?", "Volume", "vol", "Audio volume value where 256 means normal volume."),
+        new Property("FFmpegBitrate?", "AudioBitrate", "ab", "Audio bitrate passed to FFmpeg (in bits/s) (from 0 to INT_MAX) (default 128000)")
         {
             AddToString = true
         },
-        new Property("FFmpegOutputFormat?", "OutputFormat", "f", "???????????")
+        new Property("FFmpegOutputFormat?", "OutputFormat", "f", "Output container format passed to FFmpeg.")
         {
             UseSnake = true
         },
 
         // ========== VIDEO
-        new Property("bool?", "DisableVideo", "vn", "disable video"),
+        new Property("bool?", "DisableVideo", "vn", "Video stream disabling option."),
     };
  
     
@@ -29,12 +29,19 @@ using iSukces.CliTools;
 
 namespace iSukces.Cli.Ffmpeg;
 
+/// <summary>
+/// Legacy FFmpeg argument builder for audio conversion options.
+/// </summary>
 public sealed class FFmpegCli1
 {
     private sealed class FfmpegArgumentCollector : ArgumentCollector
     {
     }
 
+    /// <summary>
+    /// Command-line arguments created from the current legacy FFmpeg configuration.
+    /// </summary>
+    /// <returns>The command-line arguments for the FFmpeg process.</returns>
     public string[] GetArguments()
     {
         var args = new FfmpegArgumentCollector();

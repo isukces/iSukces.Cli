@@ -1,6 +1,9 @@
 ﻿// ReSharper disable All
 namespace iSukces.Cli.Whisper;
 
+/// <summary>
+/// Language codes and names accepted by OpenAI Whisper CLI.
+/// </summary>
 public static class WhisperLanguages
 {
     public const string Af = "af";

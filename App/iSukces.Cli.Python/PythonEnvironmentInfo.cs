@@ -2,31 +2,39 @@
 
 namespace iSukces.Cli.Python;
 
+/// <summary>
+/// Aggregated Python environment information related to PyTorch and CUDA.
+/// </summary>
 public sealed class PythonEnvironmentInfo
 {
     /// <summary>
-    /// Na podstawie torch.__version__
+    /// PyTorch version reported by torch.__version__.
     /// </summary>
     public required Result<PyTorchVersion> TorchVersion { get; init; }
 
     
     /// <summary>
-    /// Na podstawie torch.cuda.is_available()
+    /// CUDA availability reported by torch.cuda.is_available().
     /// </summary>
     public required Result<bool> IsTorchCudaAvailable { get; init; }
 
     
     /// <summary>
-    /// Na podstawie torch.version.cuda
+    /// CUDA version reported by torch.version.cuda.
     /// </summary>
     public required Result<TorchCudaVersion?> TorchCudaVersion { get; init; }
     
     /// <summary>
-    /// Z katalogu c:\Program Files\NVIDIA GPU Computing Toolkit\CUDA
+    /// CUDA Toolkit versions installed in the default NVIDIA Toolkit directory.
     /// </summary>
     public required Result<IReadOnlyList<CudaToolkitVersion>> InstalledVersions { get; init; }
 
 
+    /// <summary>
+    /// Complete environment information collected from the specified virtual environment.
+    /// </summary>
+    /// <param name="venv">Virtual environment used for PyTorch and CUDA inspection.</param>
+    /// <returns>Task containing collected Python environment information.</returns>
     public static async Task<PythonEnvironmentInfo> Make(PythonVenv venv)
     {
         if (venv == null) throw new ArgumentNullException(nameof(venv));
@@ -50,7 +58,10 @@ public sealed class PythonEnvironmentInfo
         };
         return v;
     }
-
+    /// <summary>
+    /// Detected environment problems for the collected PyTorch and CUDA information.
+    /// </summary>
+    /// <returns>Detected environment problems.</returns>
     public IReadOnlyList<PythonEnvironmentProblem> GetProblems()
     {
         var a = new PythonEnvironmentProblemFinder(this);
@@ -58,6 +69,10 @@ public sealed class PythonEnvironmentInfo
 
     }
     
+    /// <summary>
+    /// Environment updater that activates the matching CUDA Toolkit installation.
+    /// </summary>
+    /// <returns>Environment updater for CUDA variables, or null when no matching Toolkit is available.</returns>
     public EnvironmentUpdater? GetEnvironmentUpdater()
     {
         if (!IsTorchCudaAvailable.TryGetValue(out var isTorchCudaAvailable)) return null;

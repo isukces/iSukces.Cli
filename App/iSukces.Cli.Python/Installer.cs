@@ -3,10 +3,24 @@ using iSukces.CliTools;
 
 namespace iSukces.Cli.Python;
 
+/// <summary>
+/// Pip package installation or uninstallation options.
+/// </summary>
+/// <param name="Add">Package operation mode indicating installation when true and uninstallation when false.</param>
+/// <param name="Packages">Package names for the pip operation.</param>
+/// <param name="IndexUrl">Optional package index URL for installation.</param>
 public record InstallerOptions(bool Add, string[] Packages, string? IndexUrl = null);
 
+/// <summary>
+/// Python virtual environment installer and package setup coordinator.
+/// </summary>
 public sealed class Installer
 {
+    /// <summary>
+    /// Environment updater that supplies a HuggingFace access token to child processes.
+    /// </summary>
+    /// <param name="huggingFaceToken">HuggingFace access token to expose as an environment variable.</param>
+    /// <returns>Environment updater with the token variable, or null when the token is empty.</returns>
     public static EnvironmentUpdater? GetHuggingFaceTokenUpdater(string? huggingFaceToken)
     {
         if (string.IsNullOrEmpty(huggingFaceToken))
@@ -32,6 +46,10 @@ public sealed class Installer
         await runner.RunAsync();
     }
 
+    /// <summary>
+    /// Installs the configured virtual environment and pip packages.
+    /// </summary>
+    /// <returns>Task representing the asynchronous installation operation.</returns>
     public async Task Install()
     {
         var venv     = ToVenv();
@@ -89,7 +107,10 @@ public sealed class Installer
         touchAll.Touch();
     }
 
-
+    /// <summary>
+    /// Virtual environment definition for the installer configuration.
+    /// </summary>
+    /// <returns>Virtual environment configured from the installer settings.</returns>
     public PythonVenv ToVenv()
     {
         return new PythonVenv
@@ -99,10 +120,25 @@ public sealed class Installer
         };
     }
 
-    public required string             Folder           { get; init; }
-    public required string             Version          { get; init; }
-    public required InstallerOptions[] Packages         { get; init; }
-    public          string?            HuggingFaceToken { get; init; }
+    /// <summary>
+    /// Working directory for the virtual environment.
+    /// </summary>
+    public required string Folder { get; init; }
+
+    /// <summary>
+    /// Python version used to create the virtual environment.
+    /// </summary>
+    public required string Version { get; init; }
+
+    /// <summary>
+    /// Pip package operations executed by the installer.
+    /// </summary>
+    public required InstallerOptions[] Packages { get; init; }
+
+    /// <summary>
+    /// Optional HuggingFace access token exposed to installation processes.
+    /// </summary>
+    public string? HuggingFaceToken { get; init; }
 
     private record TouchedFile(string Path)
     {

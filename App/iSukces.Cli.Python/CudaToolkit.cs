@@ -3,14 +3,14 @@
 namespace iSukces.Cli.Python;
 
 /// <summary>
-/// ncvv
+/// CUDA Toolkit installation discovery helper.
 /// </summary>
 public static class CudaToolkit
 {
     /// <summary>
-    /// Z katalogu c:\Program Files\NVIDIA GPU Computing Toolkit\CUDA
+    /// Installed CUDA Toolkit versions from the default NVIDIA Toolkit directory.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>Result containing installed CUDA Toolkit versions, or an error description.</returns>
     public static Result<IReadOnlyList<CudaToolkitVersion>?> GetInstalledVersions()
     {
         return Result.Make(MakeInternal);
@@ -27,5 +27,8 @@ public static class CudaToolkit
         }
     }
 
+    /// <summary>
+    /// Default NVIDIA CUDA Toolkit installation directory.
+    /// </summary>
     public static string BaseDir = @"c:\Program Files\NVIDIA GPU Computing Toolkit\CUDA";
 }

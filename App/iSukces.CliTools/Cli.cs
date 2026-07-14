@@ -3,8 +3,15 @@ using System.Text;
 
 namespace iSukces.CliTools;
 
+/// <summary>
+/// External command runner with argument, environment, and output handling.
+/// </summary>
 public class Cli
 {
+    /// <summary>
+    /// Executes the configured command asynchronously.
+    /// </summary>
+    /// <returns>The captured result of the executed command.</returns>
     public async Task<CliResult> RunAsync()
     {
         var date      = DateTime.Now;
@@ -123,21 +130,47 @@ public class Cli
         }
     }
 
-    #region Properties
-
+    /// <summary>
+    /// Executable file name or path.
+    /// </summary>
     public required string    FileName  { get; set; }
+
+    /// <summary>
+    /// Command-line arguments passed to the executable.
+    /// </summary>
     public          string[]? Arguments { get; set; }
 
+    /// <summary>
+    /// Working directory for the executed process.
+    /// </summary>
     public string? WorkingDirectory { get; set; } = "";
+
+    /// <summary>
+    /// Failure policy that turns non-zero exit codes into exceptions.
+    /// </summary>
     public bool    ThrowIfFailed    { get; set; }
 
+    /// <summary>
+    /// Environment variable changes applied to the executed process.
+    /// </summary>
     public EnvironmentUpdater EnvironmentVariables { get; }      = new();
+
+    /// <summary>
+    /// Console output display mode for process output.
+    /// </summary>
     public CliOutputMode      OutputMode           { get; set; } = CliOutputMode.All;
+
+    /// <summary>
+    /// Output streams redirected to the console.
+    /// </summary>
     public RedirctToConsole   Redirect             { get; set; } = RedirctToConsole.Both;
 
-    #endregion
 
-
+    /// <summary>
+    /// Resolves the executable file name through configured environment paths.
+    /// </summary>
+    /// <param name="exeShortFilename">Executable file name to resolve, or <see langword="null"/> to use <see cref="FileName">FileName</see>.</param>
+    /// <returns>The current <see cref="Cli">Cli</see> instance.</returns>
     public Cli ExpandFileName(string? exeShortFilename = null)
     {
         if (string.IsNullOrEmpty(exeShortFilename))
@@ -149,20 +182,4 @@ public class Cli
 
         return this;
     }
-}
-
-public enum CliOutputMode
-{
-    None,
-    All,
-    Tail
-}
-
-[Flags]
-public enum RedirctToConsole
-{
-    None,
-    Output = 1,
-    Error = 2,
-    Both = Output | Error
 }

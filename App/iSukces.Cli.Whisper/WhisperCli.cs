@@ -6,10 +6,20 @@ using iSukces.Cli.Python;
 
 namespace iSukces.Cli.Whisper;
 
+/// <summary>
+/// Configuration and execution wrapper for OpenAI Whisper CLI calls.
+/// </summary>
 public sealed class WhisperCli
 {
     private sealed class WhisperArgumentCollector : ArgumentCollector
     {
+        /// <summary>
+        /// Adds a Boolean Whisper option by mapping the value to custom true or false text.
+        /// </summary>
+        /// <param name="value">Boolean value to map, or <see langword="null"/> to skip the option.</param>
+        /// <param name="name">Option name without the configured prefix.</param>
+        /// <param name="trueText">Option value used when <paramref name="value"/> is <see langword="true"/>.</param>
+        /// <param name="falseText">Option value used when <paramref name="value"/> is <see langword="false"/>.</param>
         public void Add(bool? value, string name, string trueText, string falseText)
         {
             if (value is null)
@@ -18,6 +28,10 @@ public sealed class WhisperCli
         }
     }
 
+    /// <summary>
+    /// Command-line arguments created from the current Whisper configuration.
+    /// </summary>
+    /// <returns>The command-line arguments for the Whisper CLI process.</returns>
     public string[] GetArguments()
     {
         // whisper audio.flac audio.mp3 audio.wav --model turbo
@@ -63,9 +77,21 @@ public sealed class WhisperCli
         }
     }
 
+    /// <summary>
+    /// Input audio or video file processed by Whisper.
+    /// </summary>
     public required string InputFile { get; set; }
 
+    /// <summary>
+    /// Python virtual environment used to run Whisper.
+    /// </summary>
     public required PythonVenv Venv { get; set; }
+
+    /// <summary>
+    /// Runs the configured Whisper CLI process asynchronously.
+    /// </summary>
+    /// <param name="workingDirectory">Working directory for the Whisper process.</param>
+    /// <returns>The captured CLI execution result.</returns>
     public async Task<CliResult> RunAsync(string? workingDirectory)
     {
       
@@ -85,45 +111,123 @@ public sealed class WhisperCli
         return r;
     }
 
+    /// <summary>
+    /// Whisper model name used for inference.
+    /// </summary>
     public WhisperModelName     Model        { get; set; }
+
+    /// <summary>
+    /// Source language code or name passed to Whisper.
+    /// </summary>
     public string?              Language     { get; set; }
+
+    /// <summary>
+    /// Output directory for generated transcription files.
+    /// </summary>
     public string?              OutputDir    { get; set; }
+
+    /// <summary>
+    /// Output file format requested from Whisper.
+    /// </summary>
     public WhisperOutputFormat? OutputFormat { get; set; }
+
+    /// <summary>
+    /// Whisper task mode.
+    /// </summary>
     public WhisperTask          Task         { get; set; } = WhisperTask.Transcribe;
+
+    /// <summary>
+    /// Sampling temperature used by Whisper decoding.
+    /// </summary>
     public double?              Temperature  { get; set; }
 
 
     /// <summary>
-    /// optional text to provide as a prompt for the first window. (default: None)
+    /// Optional text provided as the first-window prompt.
     /// </summary>
     public string? InitialPrompt { get; set; }
 
     /// <summary>
-    /// whether to perform inference in fp16; True by default (default: True)
+    /// FP16 inference preference.
     /// </summary>
     public bool? Fp16 { get; set; }
 
 
     /// <summary>
-    /// temperature to increase when falling back when the decoding fails to meet either of the thresholds below (default: 0.2)
+    /// Temperature increment used for fallback decoding attempts.
     /// </summary>
     public double? TemperatureIncrementOnFallback { get; set; }
 
+    /// <summary>
+    /// Start time of the processed audio range.
+    /// </summary>
     public TimeSpan? Begin { get; set; }
+
+    /// <summary>
+    /// End time of the processed audio range.
+    /// </summary>
     public TimeSpan? End   { get; set; }
     
     
+    /// <summary>
+    /// Previous-text conditioning preference passed to Whisper.
+    /// </summary>
     public bool? ConditionOnPreviousText { get; set; }
+
+    /// <summary>
+    /// Initial prompt carry-over preference passed to Whisper.
+    /// </summary>
     public bool? CarryInitialPrompt    { get; set; }
 }
 
+/// <summary>
+/// Whisper processing task mode.
+/// </summary>
 public enum WhisperTask
 {
+    /// <summary>
+    /// Transcription task that preserves the source language.
+    /// </summary>
     Transcribe,
+
+    /// <summary>
+    /// Translation task that converts speech to English text.
+    /// </summary>
     Translate
 }
 
+/// <summary>
+/// Output file format produced by Whisper.
+/// </summary>
 public enum WhisperOutputFormat
 {
-    Txt, Vtt, Srt, Tsv, Json, All
+    /// <summary>
+    /// Plain text output format.
+    /// </summary>
+    Txt,
+
+    /// <summary>
+    /// WebVTT subtitle output format.
+    /// </summary>
+    Vtt,
+
+    /// <summary>
+    /// SubRip subtitle output format.
+    /// </summary>
+    Srt,
+
+    /// <summary>
+    /// Tab-separated values output format.
+    /// </summary>
+    Tsv,
+
+    /// <summary>
+    /// JSON output format.
+    /// </summary>
+    Json,
+
+    /// <summary>
+    /// All supported output formats.
+    /// </summary>
+    All
 }

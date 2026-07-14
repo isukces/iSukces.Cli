@@ -1,7 +1,16 @@
 ﻿namespace iSukces.CliTools;
 
+/// <summary>
+/// Environment variable update plan for process execution or temporary activation.
+/// </summary>
 public class EnvironmentUpdater
 {
+    /// <summary>
+    /// Combined environment update plan built from two optional plans.
+    /// </summary>
+    /// <param name="a">First environment update plan.</param>
+    /// <param name="b">Second environment update plan.</param>
+    /// <returns>A combined environment update plan, or <see langword="null"/> when both operands are <see langword="null"/>.</returns>
     public static EnvironmentUpdater? operator +(EnvironmentUpdater? a, EnvironmentUpdater? b)
     {
         if (a is null) return b;
@@ -23,7 +32,14 @@ public class EnvironmentUpdater
         return result;
     }
 
+    /// <summary>
+    /// Directories prepended to the PATH variable.
+    /// </summary>
     public List<string>                AddToPathAtBeginning { get; } = [];
+
+    /// <summary>
+    /// Environment variables scheduled for assignment.
+    /// </summary>
     public Dictionary<string, string?> SetVariables         { get; } = new(StringComparer.OrdinalIgnoreCase);
 
 
@@ -46,6 +62,10 @@ public class EnvironmentUpdater
     }
 
 
+    /// <summary>
+    /// Environment variables represented by this update plan.
+    /// </summary>
+    /// <returns>The environment variable assignments produced by this update plan.</returns>
     public IEnumerable<KeyValuePair<string, string>> GetEnvironmentVariables()
     {
         if (SetVariables is not null && SetVariables.Count > 0)
@@ -64,6 +84,9 @@ public class EnvironmentUpdater
         yield return new KeyValuePair<string, string>(PathKey, valueToSet);
     }
 
+    /// <summary>
+    /// Applies the planned environment variable changes to the current process.
+    /// </summary>
     public void Setup()
     {
         foreach (var kv in GetEnvironmentVariables())
@@ -73,6 +96,10 @@ public class EnvironmentUpdater
 
     const string PathKey = "PATH";
 
+    /// <summary>
+    /// Backup update plan that can restore affected environment variables.
+    /// </summary>
+    /// <returns>An environment update plan containing previous values, or <see langword="null"/> when no backup is needed.</returns>
     public EnvironmentUpdater? GetBackup()
     {
         var setvariables = new Dictionary<string, string?>();
@@ -95,6 +122,10 @@ public class EnvironmentUpdater
         return tmp;
     }
 
+    /// <summary>
+    /// Disposable activation scope for the planned environment variable changes.
+    /// </summary>
+    /// <returns>A disposable scope that restores previous environment variables when disposed.</returns>
     public IDisposable Activate()
     {
         var backup = GetBackup();
@@ -106,6 +137,12 @@ public class EnvironmentUpdater
         });
     }
 
+    /// <summary>
+    /// Environment update plan with a single variable assignment.
+    /// </summary>
+    /// <param name="key">Environment variable name.</param>
+    /// <param name="value">Environment variable value.</param>
+    /// <returns>A new environment update plan containing the assignment.</returns>
     public static EnvironmentUpdater Make(string key, string value)
     {
         var make = new EnvironmentUpdater
@@ -118,11 +155,20 @@ public class EnvironmentUpdater
         return make;
     }
 
+    /// <summary>
+    /// Adds or replaces an environment variable assignment.
+    /// </summary>
+    /// <param name="key">Environment variable name.</param>
+    /// <param name="value">Environment variable value, or <see langword="null"/> to represent removal.</param>
     public void SetVariable(string key, string? value)
     {
         SetVariables[key] =   value;
     }
 
+    /// <summary>
+    /// Appends another update plan to this instance.
+    /// </summary>
+    /// <param name="updater">Environment update plan to append.</param>
     public void Append(EnvironmentUpdater? updater)
     {
         Append(updater?.SetVariables);
@@ -143,6 +189,13 @@ public class EnvironmentUpdater
             SetVariables[kv.Key] = kv.Value;
     }
 
+    /// <summary>
+    /// Searches for a file in configured paths and optionally in the current environment PATH.
+    /// </summary>
+    /// <param name="shortName">File name to search for.</param>
+    /// <param name="useEnvironmentPath">Value indicating whether the current process PATH should be included.</param>
+    /// <param name="found">Full file path when the file is found, or an empty string otherwise.</param>
+    /// <returns><see langword="true"/> when the file is found; otherwise, <see langword="false"/>.</returns>
     public bool SearchFile(string shortName, bool useEnvironmentPath, out string found)
     {
         var searchPaths = GetPaths().Distinct(StringComparer.OrdinalIgnoreCase);

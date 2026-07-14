@@ -4,12 +4,19 @@
 
 namespace iSukces.Cli.Ffmpeg;
 
+/// <summary>
+/// Legacy FFmpeg argument builder for audio conversion options.
+/// </summary>
 public sealed class FFmpegCli1
 {
     private sealed class FfmpegArgumentCollector : ArgumentCollector
     {
     }
 
+    /// <summary>
+    /// Command-line arguments created from the current legacy FFmpeg configuration.
+    /// </summary>
+    /// <returns>The command-line arguments for the FFmpeg process.</returns>
     public string[] GetArguments()
     {
         var args = new FfmpegArgumentCollector();
@@ -28,37 +35,37 @@ public sealed class FFmpegCli1
     
     // automatycznie dodane propertisy
     /// <summary>
-    /// input_file set input file
+    /// Input media file passed to FFmpeg.
     /// </summary>
     public string InputFile { get; set; }
 
     /// <summary>
-    /// disable audio
+    /// Audio stream disabling option.
     /// </summary>
     public bool? DisableAudio { get; set; }
 
     /// <summary>
-    /// channels set number of audio channels
+    /// Number of audio channels.
     /// </summary>
     public int? AudioChannelsNumber { get; set; }
 
     /// <summary>
-    /// volume change audio volume (256=normal)
+    /// Audio volume value where 256 means normal volume.
     /// </summary>
     public int? Volume { get; set; }
 
     /// <summary>
-    /// set bitrate (in bits/s) (from 0 to INT_MAX) (default 128000)
+    /// Audio bitrate passed to FFmpeg (in bits/s) (from 0 to INT_MAX) (default 128000)
     /// </summary>
     public FFmpegBitrate? AudioBitrate { get; set; }
 
     /// <summary>
-    /// ???????????
+    /// Output container format passed to FFmpeg.
     /// </summary>
     public FFmpegOutputFormat? OutputFormat { get; set; }
 
     /// <summary>
-    /// disable video
+    /// Video stream disabling option.
     /// </summary>
     public bool? DisableVideo { get; set; }
 

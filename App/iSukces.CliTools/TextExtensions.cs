@@ -1,7 +1,15 @@
 ﻿namespace iSukces.CliTools;
 
+/// <summary>
+/// Text-related extension methods.
+/// </summary>
 public static class TextExtensions
 {
+    /// <summary>
+    /// Converts text from PascalCase or camelCase to snake_case.
+    /// </summary>
+    /// <param name="x">Text to convert.</param>
+    /// <returns>The converted snake_case text.</returns>
     public static string ToSnake(this string x)
     {
         if (string.IsNullOrEmpty(x))
@@ -32,6 +40,12 @@ public static class TextExtensions
         return sb.ToString();
     }
 
+    /// <summary>
+    /// Non-empty text value or the provided default value.
+    /// </summary>
+    /// <param name="text">Primary text value.</param>
+    /// <param name="defaultValue">Fallback text value.</param>
+    /// <returns><paramref name="text"/> when it is not empty; otherwise, <paramref name="defaultValue"/> or an empty string.</returns>
     public static string Coalesce(this string? text, string? defaultValue)
     {
         if (string.IsNullOrEmpty(text))

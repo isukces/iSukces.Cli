@@ -2,17 +2,47 @@
 
 namespace iSukces.Cli.Python;
 
+/// <summary>
+/// Python environment areas affected by a diagnostic problem.
+/// </summary>
 [Flags]
 public enum ProblemAffected
 {
+    /// <summary>
+    /// No affected environment area.
+    /// </summary>
     None = 0,
+
+    /// <summary>
+    /// Python process execution.
+    /// </summary>
     PythonExecution = 1,
+
+    /// <summary>
+    /// PyTorch package installation.
+    /// </summary>
     PyTorchInstallation = 2,
+
+    /// <summary>
+    /// PyTorch version detection.
+    /// </summary>
     PyTorchVersionDetection = 4,
+
+    /// <summary>
+    /// CUDA Toolkit installation.
+    /// </summary>
     CudaToolkit = 8,
+
+    /// <summary>
+    /// CUDA version detection.
+    /// </summary>
     CudaVersionDetection = 16
 }
 
+/// <summary>
+/// Diagnostic analyzer for Python environment problems.
+/// </summary>
+/// <param name="value">Collected environment information to analyze.</param>
 public sealed class PythonEnvironmentProblemFinder(PythonEnvironmentInfo value)
 {
     private static bool IsError<T>(Result<T> result)
@@ -154,7 +184,10 @@ public sealed class PythonEnvironmentProblemFinder(PythonEnvironmentInfo value)
         list.Add(problem);
     }
 
-
+    /// <summary>
+    /// Detected problems for the analyzed Python environment.
+    /// </summary>
+    /// <returns>Detected environment problems.</returns>
     public IReadOnlyList<PythonEnvironmentProblem> GetProblems()
     {
         list.Clear();

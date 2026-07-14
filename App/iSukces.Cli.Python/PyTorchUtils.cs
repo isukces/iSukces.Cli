@@ -2,14 +2,16 @@
 
 namespace iSukces.Cli.Python;
 
+/// <summary>
+/// PyTorch and CUDA inspection utilities for Python virtual environments.
+/// </summary>
 public static class PyTorchUtils
 {
     /// <summary>
-    /// Na podstawie torch.cuda.is_available()
+    /// CUDA availability reported by torch.cuda.is_available().
     /// </summary>
-    /// <param name="venv"></param>
-    /// <returns></returns>
-    /// <exception cref="Exception"></exception>
+    /// <param name="venv">Virtual environment used to run Python code.</param>
+    /// <returns>Result containing CUDA availability, or an error description.</returns>
     public static async Task<Result<bool>> GetIsCudaAvailable(PythonVenv venv)
     {
         if (venv == null) throw new ArgumentNullException(nameof(venv));
@@ -32,10 +34,10 @@ public static class PyTorchUtils
 
         
     /// <summary>
-    /// Na podstawie torch.version.cuda
+    /// CUDA version reported by torch.version.cuda.
     /// </summary>
-    /// <param name="venv"></param>
-    /// <returns></returns>
+    /// <param name="venv">Optional virtual environment used to run Python code.</param>
+    /// <returns>Result containing the CUDA version reported by PyTorch, or an error description.</returns>
     public static async Task<Result<TorchCudaVersion?>> GetTorchCudaVersion(PythonVenv? venv = null)
     {
         var value = await Result.FromCliCallEx(async () =>
@@ -57,10 +59,10 @@ public static class PyTorchUtils
     }
 
     /// <summary>
-    /// Na podstawie torch.__version__
+    /// PyTorch version reported by torch.__version__.
     /// </summary>
-    /// <param name="venv"></param>
-    /// <returns></returns>
+    /// <param name="venv">Virtual environment used to run Python code.</param>
+    /// <returns>Result containing the PyTorch version, or an error description.</returns>
     public static async Task<Result<PyTorchVersion>> GetTorchVersion(PythonVenv venv)
     {
         if (venv == null) throw new ArgumentNullException(nameof(venv));
@@ -76,7 +78,12 @@ public static class PyTorchUtils
             , a => a is null ? "Nie można rozpoznać wersji torcha" : null);
         return value;
     }
-
+    /// <summary>
+    /// Result of running Python code in the specified virtual environment.
+    /// </summary>
+    /// <param name="code">Python code passed to the interpreter.</param>
+    /// <param name="venv">Virtual environment used to run the Python code.</param>
+    /// <returns>CLI execution result from the Python process.</returns>
     public static async Task<CliResult> RunPythonCode(string code, PythonVenv venv)
     {
         if (venv == null) throw new ArgumentNullException(nameof(venv));
@@ -100,7 +107,11 @@ public static class PyTorchUtils
  
     private const string Packages = "torch torchvision torchaudio";
     private const string IndexUrl = "https://download.pytorch.org/whl/cu121";
-
+    /// <summary>
+    /// Package operations required to install GPU-enabled PyTorch.
+    /// </summary>
+    /// <param name="useGpu">Value indicating whether GPU-enabled PyTorch packages are required.</param>
+    /// <returns>Package operations required for the selected PyTorch installation mode.</returns>
     public static IEnumerable<InstallerOptions> GetInstallingElements(bool useGpu)
     {
         if (!useGpu)

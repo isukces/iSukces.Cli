@@ -1,7 +1,14 @@
 ﻿namespace iSukces.Cli.Python;
 
+/// <summary>
+/// Python launcher utility methods.
+/// </summary>
 public static class PyUtils
 {
+    /// <summary>
+    /// Python interpreter versions installed for the Windows Python launcher.
+    /// </summary>
+    /// <returns>Task containing installed Python interpreter versions.</returns>
     public static async Task<IReadOnlyList<PythonVersionInfo>>
         GetInstalledVersions()
     {

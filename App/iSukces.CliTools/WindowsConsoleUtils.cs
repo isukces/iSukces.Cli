@@ -2,8 +2,16 @@
 
 namespace iSukces.CliTools;
 
+/// <summary>
+/// Utilities for Windows console command-line handling.
+/// </summary>
 public static class WindowsConsoleUtils
 {
+    /// <summary>
+    /// Escapes a command-line argument when Windows parsing rules require quoting.
+    /// </summary>
+    /// <param name="argument">Command-line argument to escape.</param>
+    /// <returns>The original argument or its escaped representation.</returns>
     public static string EscapeCommandLineParameterIfNecessary(string argument)
     {
         if (string.IsNullOrEmpty(argument))

@@ -1,12 +1,14 @@
 namespace iSukces.CliTools;
 
 /// <summary>
-///     Handles console output in "tail" mode — displays a framed window
-///     with scrolling text content and moves to a new line on dispose.
-///     Resilient to console window/buffer resizing (including narrowing).
+/// Tail-mode console output window with framed scrolling text.
 /// </summary>
 public sealed class TailConsoleOutput : IDisposable
 {
+    /// <summary>
+    /// Initializes tail-mode console output with the requested number of visible lines.
+    /// </summary>
+    /// <param name="visibleLines">Number of output lines visible in the tail window.</param>
     public TailConsoleOutput(int visibleLines = 5)
     {
         _visibleLines = Math.Max(1, visibleLines);
@@ -40,6 +42,10 @@ public sealed class TailConsoleOutput : IDisposable
         Redraw();
     }
 
+    /// <summary>
+    /// Writes one line to the tail output window.
+    /// </summary>
+    /// <param name="text">Line of text to display.</param>
     public void Write(string text)
     {
         text = text.Replace("\r", "").Replace("\n", "");
@@ -52,6 +58,9 @@ public sealed class TailConsoleOutput : IDisposable
         Redraw();
     }
 
+    /// <summary>
+    /// Releases the tail output window and restores the console cursor position.
+    /// </summary>
     public void Dispose()
     {
         _disposed = true;
